@@ -378,7 +378,7 @@ def main():
     '''
     Define start and goal node. You may change how to define the nodes.
     '''
-    entrance_node = (row-1, 1)
+    entrance_node = (row-2, 1)
     exit_node = (0, col-2)
 
     # If you are using a node class, you may want to convert each maze node to its class here
@@ -388,7 +388,7 @@ def main():
     '''
     #run the ana_star algorithm
     start = t.clock()
-    ana_star(maze, entrance_node, exit_node)
+    #ana_star(maze, entrance_node, exit_node)
     end=t.clock()
     print("Timetaken for anastar")
     print(end-start)
