@@ -108,7 +108,7 @@ def find_neighbours(maze,node2):
             continue
 
         # create a new node
-        new_node=node(neighbour_node_position[0],neighbour_node_position[1],3,node2)
+        #new_node=node(neighbour_node_position[0],neighbour_node_position[1],3,node2)
 
         # Append it with the neighbour list
         #print neighbour_node_position[0],neighbour_node_position[1]
@@ -128,6 +128,8 @@ def node_creation():
 
 
 def a_star(maze,start,exit):
+
+    start_time=t.clock()
     start_time=t.clock()
     start_node=node(start[0],start[1],3,None)
     goal_node=node(exit[0], exit[1], 4, None)
@@ -167,22 +169,23 @@ def a_star(maze,start,exit):
         #Check whether the current node is the goal
         #Backtrack the path
         if current_node == goal_node:
-           shortest_path=[]
-           current=current_node
-           while current is not None:
-               shortest_path.append((current.x,current.y))
-               maze[current.x][current.y] = 5
-               current=current.parent
+            end=t.clock()
+            print("Time taken for Astar solution")
+            print(end-start_time)
+            shortest_path=[]
+            current=current_node
+            while current is not None:
+                shortest_path.append((current.x,current.y))
+                maze[current.x][current.y] = 5
+                current=current.parent
 
-           maze[start[0]][start[1]] = 3
-           maze[exit[0]][exit[1]] = 4
-           draw_canvas(canvas, maze)
-           root.update()
-           end=t.clock()
-           print("Time_taken for Astar")
-           print(end-start_time)
-           print shortest_path
-           return shortest_path[::-1],closed_list #returns reversed path
+            maze[start[0]][start[1]] = 3
+            maze[exit[0]][exit[1]] = 4
+            draw_canvas(canvas, maze)
+            root.update()
+            end=t.clock()
+            print shortest_path
+            return shortest_path[::-1],closed_list #returns reversed path
 
 
         #Find neighbours of the current node
@@ -331,7 +334,7 @@ def ana_star(maze, start_node, exit_node):
 
     a=[]
     z=0
-
+    total_start=t.clock()
     while(len(open_list)!=0):
         print("Global_cost")
         print(G)
@@ -346,10 +349,10 @@ def ana_star(maze, start_node, exit_node):
 
             elements.update(elements.parent.g,exit_node)
             #Prune the states having greater G value
-            #print(elements.g+elements.h)
             if(elements.g+elements.h>=(G)):
                 k=open_list.pop(index)
-
+        total_end=t.clock()
+    print("Total time for anastar",total_end-total_start)
 
     for j in range(len(a)-1):
         print("Path",j,)
@@ -389,7 +392,7 @@ def main():
     '''
     Define start and goal node. You may change how to define the nodes.
     '''
-    entrance_node = (row-7, 1)
+    entrance_node = (row-2, 5)
     exit_node = (0, col-2)
 
     # If you are using a node class, you may want to convert each maze node to its class here
@@ -398,25 +401,20 @@ def main():
     Run your ana_star algorithm function. You may choose to change the function or not use it.
     '''
     #run the ana_star algorithm
-    start = t.clock()
     ana_star(maze, entrance_node, exit_node)
-    end=t.clock()
-    print("Timetaken for anastar")
-    print(end-start)
-    print G
-    root.mainloop()
+    #root.mainloop()
     # start=t.clock()
     # sol,expanded_nodes=a_star(maze, entrance_node, exit_node)
     # end=t.clock()
     # if (sol!=None):
     #     print("Length of astar solution")
     #     print(len(sol))
-    #     print("Timetaken for astar")
-    #     print(end-start)
-    #     root.mainloop()
+    #     #print("Timetaken for astar")
+    #     #print(end-start)
+    #
     # else:
     #     print("No solution found")
-
+    root.mainloop()
 
 
 
